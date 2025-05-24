@@ -1,0 +1,236 @@
+---
+title: "Polycomb_dna_intersection_analysis"
+author: "Bulat"
+date: "2025-05-17"
+output: html_document
+---
+
+This notebook implements intersection of secondary DNA regions with polycomb anchor regions and promoters (2000bp, 1000bp).
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = TRUE,
+  results = 'hide',
+  warning = FALSE,
+  message = FALSE
+)
+
+```
+
+### Packages installation
+
+```{r installation, echo=TRUE}
+required_packages <- c("GenomicFeatures", "rtracklayer", "GenomicRanges", "dplyr")
+new_packages <- required_packages[!(required_packages %in% installed.packages()[, "Package"])]
+if (length(new_packages)) install.packages(new_packages)
+```
+
+### Load packages and data preproccessing
+
+```{r setup and import packages}
+main_dir <- dirname(rstudioapi::getSourceEditorContext()$path)
+setwd(main_dir)
+
+library(GenomicFeatures)
+library(rtracklayer)
+library(GenomicRanges)
+library(dplyr)
+```
+
+```{r functions for data upload}
+#' Load TxDb object and GTF as data.frame
+#'
+#' @param gtf_path Path to GTF file (can be compressed)
+#'
+#' @return A list with:
+#'   - txdb: TxDb object from the GTF
+#'   - gtf_df: data.frame with the GTF content
+
+load_txdb_and_gtf <- function(gtf_path) {
+  txdb <- makeTxDbFromGFF(gtf_path, format = "gtf")
+  gtf <- import(gtf_path)
+  gtf_df <- as.data.frame(gtf)
+  return(list(txdb = txdb, gtf_df = gtf_df))
+}
+
+#' Load Polycomb anchor regions as GRanges
+#'
+#' @param polycomb_path Path to Excel file with polycomb anchors (with columns: chrom, start, end, genes)
+#'
+#' @return GRanges object with gene metadata
+load_polycomb <- function(polycomb_path) {
+  polycomb <- read.delim(polycomb_path, header = FALSE, stringsAsFactors = FALSE)
+  colnames(polycomb) <- c("chrom", "start", "end", "gene")
+  polycomb_gr <- GRanges(
+    seqnames = Rle(polycomb$chrom),
+    ranges = IRanges(start = polycomb$start, end = polycomb$end),
+    gene = polycomb$gene
+  )
+  return(polycomb_gr)
+}
+
+
+#' Import G-quadruplex (G4) regions from BED with strand information
+#'
+#' @param path Path to BED file with columns: chrom, start, end, strand
+#' @return GRanges object with strand information
+import_gq_with_strand <- function(path) {
+  df <- read.delim(path, header = TRUE, stringsAsFactors = FALSE)
+  colnames(df) <- c("chrom", "start", "end", "strand")
+   df$strand <- ifelse(
+    df$strand %in% c("+", "-", "*"), 
+    df$strand, 
+    "*"  # replacing incorrect values with '*'
+  )
+  gr <- GRanges(
+    seqnames = Rle(df$chrom),
+    ranges = IRanges(start = df$start + 1, end = df$end),  # BED-format: start 0-based
+    strand = df$strand
+  )
+  return(gr)
+}
+```
+
+```{r define paths and load data}
+# Load data
+gtf_path <- "../data/gencode.v47.chr_patch_hapl_scaff.basic.annotation.gtf.gz"
+polycomb_path <- "../data/polycomb_dot_anchors.bed"
+
+txdb_gtf <- load_txdb_and_gtf(gtf_path)
+promoters_all <- promoters(txdb_gtf$txdb, upstream = 2000, downstream = 1000)
+polycomb_gr <- load_polycomb(polycomb_path)
+```
+
+### Intersection of secondary DNA structures with polycomb
+
+```{r}
+#' Annotate overlaps between structure GRanges (e.g., Z-DNA or G4) and promoter/Polycomb regions
+#'
+#' @param structure_gr GRanges object for Z-DNA or G4 elements
+#' @param promoters Promoter regions as GRanges
+#' @param polycomb_gr GRanges object of Polycomb dot anchors
+#' @param gtf_df GTF data as data frame
+#' @param label Label for the structure type (optional)
+#' @param strand_mode Strand filtering mode: "ignore_strand", "forward_strand", or "reverse_strand"
+#'
+#' @return Data frame with annotation of intersected regions
+annotate_overlaps <- function(structure_gr, promoters, polycomb_gr, gtf_df,
+                              label = "structure", strand_mode = "ignore_strand") {
+  # intersections with promoters without taking into account the strand
+  prom_overlap <- findOverlaps(promoters, structure_gr, ignore.strand = TRUE)
+  intersected_proms <- promoters[queryHits(prom_overlap)]
+  intersected_structure <- structure_gr[subjectHits(prom_overlap)]
+
+  # filtering by strand
+  if (strand_mode %in% c("forward_strand", "reverse_strand")) {
+    same_strand <- as.vector(strand(intersected_proms)) == as.vector(strand(intersected_structure))
+    if (strand_mode == "forward_strand") {
+      keep <- same_strand
+    } else if (strand_mode == "reverse_strand") {
+      keep <- !same_strand
+    }
+    intersected_proms <- intersected_proms[keep]
+    intersected_structure <- intersected_structure[keep]
+  }
+
+  # interscetion with polycomb dot anchors
+  anchor_overlap <- findOverlaps(intersected_structure, polycomb_gr, ignore.strand = TRUE)
+  final_structure <- intersected_structure[queryHits(anchor_overlap)]
+  final_polycomb <- polycomb_gr[subjectHits(anchor_overlap)]
+  final_proms <- intersected_proms[queryHits(anchor_overlap)]
+
+  # create data frame with annotated intersections
+  df <- data.frame(
+    chrom = as.vector(seqnames(final_structure)),
+    ss_start = start(final_structure) - 1,
+    ss_end = end(final_structure),
+    width = width(final_structure),
+    strand_structure = as.vector(strand(final_structure)),
+    prom_seqnames = as.vector(seqnames(final_proms)),
+    strand_promoter = as.vector(strand(final_proms)),
+    prom_start = start(final_proms),
+    prom_end = end(final_proms),
+    anchor_seqnames = as.vector(seqnames(final_polycomb)),
+    anchor_start = start(final_polycomb),
+    anchor_end = end(final_polycomb),
+    transcript_id = mcols(final_proms)$tx_name
+  )
+
+  # add gene name
+  tx_gene_map <- gtf_df %>%
+    filter(type == "transcript") %>%
+    select(transcript_id, gene_name)
+
+  df <- left_join(df, tx_gene_map, by = "transcript_id")
+
+  return(df)
+}
+
+
+
+#' Process and annotate genomic structures (G4 or Z-DNA), save results to CSV
+#'
+#' @param structure_path Path to BED or TXT file with structure coordinates
+#' @param promoters Promoter regions as GRanges
+#' @param polycomb_gr Polycomb anchors as GRanges
+#' @param gtf_df GTF data as data frame
+#' @param out_name Base name for output CSV file(s)
+#' @param is_gq Logical indicating whether the structure is a G-quadruplex (with strand)
+process_and_save <- function(structure_path, promoters, polycomb_gr, gtf_df, out_name, is_gq = FALSE) {
+  if (is_gq) {
+    gr <- import_gq_with_strand(structure_path)
+    gr_df <- as.data.frame(gr)
+    gr_df$strand <- as.character(strand(gr))
+
+    # for each type of strand
+    for (strand_mode in c("forward_strand", "reverse_strand", "ignore_strand")) {
+      gq_gr <- makeGRangesFromDataFrame(gr_df, keep.extra.columns = TRUE)
+
+      annotated_df <- annotate_overlaps(
+        structure_gr = gq_gr,
+        promoters = promoters,
+        polycomb_gr = polycomb_gr,
+        gtf_df = gtf_df,
+        strand_mode = strand_mode
+      )
+
+      write.csv(annotated_df, paste0(out_name, "_", strand_mode, ".csv"), row.names = FALSE)
+    }
+
+  } else {
+    # Z-DNA (ignore strand)
+    gr <- import.bed(structure_path)
+    annotated_df <- annotate_overlaps(
+      structure_gr = gr,
+      promoters = promoters,
+      polycomb_gr = polycomb_gr,
+      gtf_df = gtf_df,
+      strand_mode = "ignore_strand"
+    )
+    write.csv(annotated_df, paste0(out_name, ".csv"), row.names = FALSE)
+  }
+}
+```
+
+```{r process G4}
+# process G4 with different intersection types (forward, reverse, ignore)
+process_and_save(
+  structure_path = "../data/secondary_structures/HG38_G4_predictions_thr_0.25_minlen_6.bed",
+  promoters = promoters_all,
+  polycomb_gr = polycomb_gr,
+  gtf_df = txdb_gtf$gtf_df,
+  out_name = "G4_in_polycomb",
+  is_gq = TRUE
+)
+```
+
+```{r process Z-DNA}
+# process Z-DNA
+process_and_save(
+  structure_path = "../data/secondary_structures/HG38_ZDNA_ZDNABERT_predictions_thr_0.25_minlen_6.bed",
+  promoters = promoters_all,
+  polycomb_gr = polycomb_gr,
+  gtf_df = txdb_gtf$gtf_df,
+  out_name = "Z_DNA_in_polycomb"
+)
+```

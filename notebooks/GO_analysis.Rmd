@@ -1,0 +1,190 @@
+---
+title: "GOAnalysis"
+author: "Bulat"
+date: "2025-02-26"
+output: html_document
+---
+
+## GO Enrichment Analysis
+
+This notebook performs Gene Ontology (GO) enrichment analysis of transcription factor (TF) and nonTF genes associated with polycomb-repressed chromatin domains containing non-B DNA secondary structures (Z-DNA and G-quadruplex)
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = TRUE,
+  results = 'hide',
+  warning = FALSE,
+  message = FALSE
+)
+```
+
+```{r installation}
+# if (!requireNamespace("BiocManager", quietly = TRUE))
+#     install.packages("BiocManager")
+# 
+# BiocManager::install("clusterProfiler")
+# BiocManager::install("org.Hs.eg.db")
+# install.packages("ggplot2")
+```
+
+```{r, set up directroy and import packages}
+main_dir <- dirname(rstudioapi::getSourceEditorContext()$path) 
+setwd(main_dir)
+library(clusterProfiler)
+library(ggplot2)
+library(org.Hs.eg.db)
+```
+
+```{r z_dna data load}
+# Upload list of TF\nonTF genes for Z-DNA or G4
+#GQ_tf_genes_in_polycmb <- read.csv('../data/TF_and_not_TF_genes/G4_polycomb_TF_genes.csv')
+#GQ_not_tf_genes_in_polycomb <-read.csv('../data/TF_and_not_TF_genes/G4_polycomb_nonTF_genes.csv')
+#Z_DNA_tf_in_polycombs <- read.csv('../data/TF_and_not_TF_genes/ZDNA_polycomb_TF_genes.csv')
+Z_DNA_not_tf_genes_in_polycomb <-  read.csv('../data/TF_and_not_TF_genes/ZDNA_polycomb_nonTF_genes.csv')
+```
+
+```{r GO}
+# Separate GO analysis for each GO term
+gene_symbols <- Z_DNA_not_tf_genes_in_polycomb$gene_name  
+gene.df <- bitr(gene_symbols, fromType = "SYMBOL",
+                toType = c("ENSEMBL", "ENTREZID"),
+                OrgDb = org.Hs.eg.db)
+```
+
+```{r GO for differnt GO terms}
+# GO Analysis for Biological Processes (BP)
+ego_BP = enrichGO(gene=gene.df$ENTREZID,
+                  OrgDb=org.Hs.eg.db,
+                  keyType="ENTREZID",
+                  ont="BP",
+                  pAdjustMethod="BH",
+                  pvalueCutoff=0.05,
+                  qvalueCutoff=0.05)
+# GO analysis for Molecular functions (MF)
+ego_MF = enrichGO(gene=gene.df$ENTREZID,
+                  OrgDb=org.Hs.eg.db,
+                  keyType="ENTREZID",
+                  ont="MF",
+                  pAdjustMethod="BH",
+                  pvalueCutoff=0.05,
+                  qvalueCutoff=0.05)
+
+# GO analysis for Cellular Components (CC)
+ego_CC = enrichGO(gene=gene.df$ENTREZID,
+                  OrgDb=org.Hs.eg.db,
+                  keyType="ENTREZID",
+                  ont="CC",
+                  pAdjustMethod="BH",
+                  pvalueCutoff=0.05,
+                  qvalueCutoff=0.05)
+```
+
+### Visualization
+#### Barplot
+
+```{r barplots, echo=TRUE}
+b1 <- barplot(ego_BP, showCategory=10) + ggtitle("GO Enrichment (Biological Process)") + ylab("GO term") + # TOP 10 BP categories
+    theme(
+    plot.title = element_text(hjust = 0.5, size = 14), 
+    axis.title.y = element_text(size = 12),  
+    axis.text.y = element_text(size = 10),
+    axis.text.x = element_text(size = 10)    
+  ) 
+b2 <- barplot(ego_MF, showCategory=10) + ggtitle("GO Enrichment (Molecular Function)") + ylab("GO term") + 
+   theme(
+    plot.title = element_text(hjust = 0.5, size = 14), 
+    axis.title.y = element_text(size = 12),  
+    axis.text.y = element_text(size = 10),
+    axis.text.x = element_text(size = 10)    
+  )  
+b3 <- barplot(ego_CC, showCategory=10) + ggtitle("GO Enrichment (Cellular Component)") + ylab("GO term") + 
+    theme(
+    plot.title = element_text(hjust = 0.5, size = 14), 
+    axis.title.y = element_text(size = 12),  
+    axis.text.y = element_text(size = 10),
+    axis.text.x = element_text(size = 10)    
+  ) 
+```
+
+```{r}
+ggsave("G4-TF_genes_GO:BP.png", plot = b1, width = 8, height = 6, dpi = 300)
+ggsave("G4-TF_genes_GO:MF.png", plot = b2, width = 8, height = 6, dpi = 300)
+#ggsave("G4-TF_genes_GO:CC.png", plot = b3, width = 8, height = 6, dpi = 300)
+```
+
+#### Dotplot
+
+```{r, dotplots}
+p1 <- dotplot(ego_BP, showCategory = 10) + 
+  ggtitle("GO Enrichment (Biological Process)") +
+  ylab("GO term") + 
+  theme(
+    plot.title = element_text(hjust = 0.5, size = 14), 
+    axis.title.y = element_text(size = 12),  
+    axis.text.y = element_text(size = 10),
+    axis.text.x = element_text(size = 10)    
+  )
+p2 <- dotplot(ego_MF, showCategory = 10) + 
+  ggtitle("GO Enrichment (Molecular Function)") +
+  ylab("GO term") + 
+  theme(
+    plot.title = element_text(hjust = 0.5, size = 14), 
+    axis.title.y = element_text(size = 12),  
+    axis.text.y = element_text(size = 10),
+    axis.text.x = element_text(size = 10)    
+  )
+p3 <- dotplot(ego_CC, showCategory = 10) + 
+  ggtitle("GO Enrichment (Cellular Component)") +
+  ylab("GO term") + 
+  theme(
+    plot.title = element_text(hjust = 0.5, size = 14), 
+    axis.title.y = element_text(size = 12),  
+    axis.text.y = element_text(size = 10),
+    axis.text.x = element_text(size = 10)    
+  )
+```
+
+```{r fig.width=10, fig.height=8}
+p1
+```
+
+
+```{r, include=FALSE}
+ggsave("Z-DNA-NonTF_genes_GO:BP.png", plot = p1, width = 10, height = 8, dpi = 300)
+ggsave("Z-DNA-NonTF_genes_GO:MF.png", plot = p2, width = 8, height = 6, dpi = 300)
+ggsave("Z-DNA-NonTF_genes_GO:CC.png", plot = p3, width = 8, height = 6, dpi = 300)
+```
+
+```{r}
+# Combined GO analysis (visualization of results on a single figure)
+ego_all <- simplify(enrichGO(gene = gene.df$ENTREZID, 
+                             OrgDb = org.Hs.eg.db, 
+                             keyType = "ENTREZID", 
+                             ont = "ALL", 
+                             pAdjustMethod = "BH", 
+                             pvalueCutoff = 0.05, 
+                             qvalueCutoff = 0.05))
+```
+
+```{r}
+p4 <- dotplot(ego_all, showCategory = 10, split = "ONTOLOGY") + 
+  ggtitle("GO Enrichment Analysis for Z-DNA: BP, MF, CC") +
+  facet_grid(~ONTOLOGY) + # Division by ontologies
+  ylab("GO term") + 
+    theme(
+    plot.title = element_text(hjust = 0.5, size = 14), 
+    axis.title.y = element_text(size = 12),  
+    axis.text.y = element_text(size = 11),
+    axis.text.x = element_text(size = 10)    
+  ) 
+```
+
+```{r fig.width=14, fig.height=12}
+p4
+```
+
+
+```{r, include=FALSE}
+ggsave("GO_combined_Z-DNA_TF_genes.png", plot = p4, width = 15, height = 13, dpi = 300)
+```
+
