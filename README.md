@@ -26,62 +26,41 @@ Picture
 **Results**
 
 1. Significant enrichment of Z-DNA and G-quadruplexes was observed at PRC2 anchor regions in neurons, particularly within the promoter regions of both TF and non-TF genes.
-
-<div align="center">
-  <table>
-    <tr>
-      <td>
-        <img src="./imgs/Permutation%20test/Z-DNA:All_TF_genes_vs_TF_genes_in_polycomb.png" alt="TF_Z-DNA" width="450"/>
-      </td>
-      <td>
-        <img src="./imgs/Permutation%20test/GQ:All_TF_genes_vs_TF_genes_in_polycomb.png" alt="TF_GQ" width="450"/>
-      </td>
-    </tr>
-    <tr>
-      <td colspan="2" align="center">
-        Fig. 1. Permutation test for Z-DNA and G4s regions in transcription factor genes overlapping with Polycomb anchor regions.
-      </td>
-    </tr>
-  </table>
+<div style="display: flex; justify-content: center; gap: 20px; margin-bottom: 25px;">
+  <img src="./imgs/Permutation%20test/Z-DNA:All_TF_genes_vs_TF_genes_in_polycomb.png" alt="TF_Z-DNA" width="450"/>
+  <img src="./imgs/Permutation%20test/G4:All_TF_genes_vs_TF_genes_in_polycomb.png" alt="TF_G4" width="450"/>
+</div>
+<div style="text-align: center; font-style: italic; margin-top: 5px;">
 </div>
 
 
 2. Gene ontology analysis revealed strong associations of these loci with neuronal development, chromatin remodeling, and transcriptional repression pathways. Tissue enrichment analysis confirmed that some genes are highly expressed in the brain, as well as in other tissues.
 
 
-![GO Analysis_GQ](./imgs/Gene%20ontology/GO_combined_GQ_TF_genes.png)
+![GO Analysis_GQ](./imgs/Gene%20ontology/GO_combined_G4_TF_genes.png)
+![GO Analysis_GQ](./imgs/Gene%20ontology/Z-DNA-NonTF_genes_GO:BP.png)
 
-<div align="center">
-  <table border="0" cellspacing="0" cellpadding="0">
-    <tr>
-      <td colspan="2" align="center">
-        <img src="./imgs/Gene%20ontology/Z-DNA-NonTF_genes_GO:BP.png" alt="GO ZDNA BP" width="450"/>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <img src="./imgs/Gene%20ontology/Z-DNA-NonTF_genes_GO:MF.png" alt="GO ZDNA MF" width="350"/>
-      </td>
-      <td>
-        <img src="./imgs/Gene%20ontology/Z-DNA-NonTF_genes_GO:CC.png" alt="GO ZDNA CC" width="350"/>
-      </td>
-    </tr>
-    <tr>
-      <td colspan="2" align="center">
-        <b>Figure:</b> Gene ontology enrichment analysis (BP, MF, CC) for non-transcription factor genes with Z-DNA structures in PRC2 regions.
-      </td>
-    </tr>
-  </table>
+<div style="display: flex; justify-content: center; gap: 20px; margin-bottom: 25px;">
+  <img src="./imgs/Gene%20ontology/Z-DNA-NonTF_genes_GO:MF.png" alt="Molecular Function" width="500"/>
+  <img src="./imgs/Gene%20ontology/Z-DNA-NonTF_genes_GO:CC.png" alt="Cellular Component" width="500"/>
 </div>
+<div style="text-align: center; font-style: italic; margin-top: 5px;">
+  Fig. 2. Gene Ontology analysis for Non-TF genes with Z-DNA forming regions: Molecular Function (left) and Cellular Component (right).
+</div>
+
 
 
 
 3. UMAP clustering revealed that Z-DNA regions exhibit distinct patterns when characterized by omics features in neuronal tissue. This clustering highlighted key signals, including transcription factors, histone marks, RNA Polymerase II and III binding sites, and DNase I hypersensitivity sites.
 Z-DNA regions overlapping with PRC2 anchors exhibited a similar clustering pattern to other regions.
 
-![UMAP_Z-DNA_leiden](./imgs/UMAP/exp_and_predicted_zdna_chip_atlas_omics_n200_res0.25.png)
-
-![UMAP_Z-DNA](./imgs/UMAP/filter_row_95_umap_n55_d0.1_mmanhattan.png)
+<div style="display: flex; justify-content: center; gap: 20px; margin-bottom: 25px;">
+  <img src="./imgs/Umap/umap_n55_d0.1_mmanhattan.png" alt="UMAP projection" width="500"/>
+  <img src="./imgs/Umap/leiden_clusters_n200_res0.25.png" alt="Leiden clustering" width="500"/>
+</div>
+<div style="text-align: center; font-style: italic; margin: 5px 0 30px 0;">
+  Fig. 3. UMAP visualization of Z-DNA regions: Projection and Leiden clustering.
+</div>
 
 
 **Conclusion**
@@ -98,7 +77,7 @@ All results are available in the `imgs` directory. Scripts and notebooks for ove
 
 - `HG38_ZDNA_ZDNABERT_predictions_thr_0.25_minlen_6.bed` - predicted regions of Z-DNA with ZDNABERT
 
-- `HG38_GQ_predictions_thr_0.25_minlen_6.bed`, - predicted regions of G-quadruplexes based on [Endoquad](https://academic.oup.com/nar/article/52/D1/D72/7334091) database with strand
+- `HG38_G4_predictions_thr_0.25_minlen_6.bed`, - predicted regions of G-quadruplexes based on [Endoquad](https://academic.oup.com/nar/article/52/D1/D72/7334091) database with strand
 
 - `polycomb_dot_anchors.bed` - Polycomb anchor regions with genes, identifying long-range interactions characteristic of neuronal dots.
 
