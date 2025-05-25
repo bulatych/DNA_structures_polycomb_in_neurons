@@ -9,10 +9,8 @@ This repository contains the results of the semester project at the Bioinformati
 
 **Objective**
 
-The 3D genome organization in human neurons differs significantly from other cell types. A hallmark feature is the presence of long-range interactions called “neuronal dots,” visible on Hi-C maps and overlapping with H3K27me3 ChIP-seq peaks linked to Polycomb-mediated repression [Pletenev 2024](https://academic.oup.com/nar/article/52/11/6234/7655789?login=false). It has been experimentally demonstrated that PRC2 complex components associate with G-quadruplex structures, and that there is specific binding of the CTCF protein to G-quadruplexes [Hemphill et al.](https://pmc.ncbi.nlm.nih.gov/articles/PMC10266057/). 
+The 3D genome organization in human neurons differs significantly from other cell types. A hallmark feature is the presence of long-range interactions called “neuronal dots,” visible on Hi-C maps and overlapping with H3K27me3 ChIP-seq peaks linked to Polycomb-mediated repression [Pletenev 2024](https://academic.oup.com/nar/article/52/11/6234/7655789?login=false). It has been experimentally demonstrated that PRC2 complex components associate with G-quadruplex structures, and that there is specific binding of the CTCF protein to G-quadruplexes [Hemphill et al.](https://pmc.ncbi.nlm.nih.gov/articles/PMC10266057/) 
 This study explores the localization of Z-DNA and G-quadruplexes at PRC2 anchor regions in neurons.
-
-Picture
 
 **Goals**
 
@@ -30,14 +28,14 @@ Picture
   <div style="text-align: center; max-width: 450px; margin: 0 auto;">
     <img src="./imgs/Permutation%20test/Z-DNA:All_TF_genes_vs_TF_genes_in_polycomb.png" alt="TF_Z-DNA" style="width: 100%; margin-bottom: 10px;"/>
     <div style="font-style: italic; font-size: 0.9em;">
-      Fig 1. Permutation test for Z-DNA: comparison of the distributions of all transcription factor (TF) genes and TF genes in polycomb-associated regions.
+      Figure 1. Permutation test for Z-DNA: comparison of the distributions of all transcription factor (TF) genes and TF genes in polycomb-associated regions.
     </div>
   </div>
   
   <div style="text-align: center; max-width: 450px; margin: 0 auto;">
     <img src="./imgs/Permutation%20test/G4:All_TF_genes_vs_TF_genes_in_polycomb.png" alt="TF_G4" style="width: 100%; margin-bottom: 10px;"/>
     <div style="font-style: italic; font-size: 0.9em;">
-      Fig. 2. Permutation test for G-quadruplexes: comparison of the distributions of all TF genes and TF genes in polycomb-associated regions.
+      Figure 2. Permutation test for G-quadruplexes: comparison of the distributions of all TF genes and TF genes in polycomb-associated regions.
     </div>
   </div>
 </div>
@@ -45,19 +43,18 @@ Picture
  
 2. Gene ontology analysis revealed strong associations of these loci with neuronal development, chromatin remodeling, and transcriptional repression pathways. Tissue enrichment analysis confirmed that some genes are highly expressed in the brain, as well as in other tissues.
 
-
-<div style="display: flex; flex-direction: column; align-items: center; gap: 30px; margin-bottom: 25px;">
+   <div style="display: flex; flex-direction: column; align-items: center; gap: 30px; margin-bottom: 25px;">
   <div style="text-align: center; max-width: 600px; margin: 0 auto;">
     <img src="./imgs/Gene%20ontology/GO_combined_G4_TF_genes.png" alt="GO_G4_TF" style="width: 100%; margin-bottom: 10px;"/>
     <div style="font-style: italic; font-size: 0.9em;">
-      Fig. 3. Gene Ontology analysis of transcription factor (TF) genes associated with G-quadruplexes (G4)
+      Figure 3. Gene Ontology analysis of transcription factor (TF) genes associated with G-quadruplexes (G4)
     </div>
   </div>
   
   <div style="text-align: center; max-width: 600px; margin: 0 auto;">
     <img src="./imgs/Gene%20ontology/Z-DNA-NonTF_genes_GO:BP.png" alt="GO_Z-DNA_NonTF" style="width: 100%; margin-bottom: 10px;"/>
     <div style="font-style: italic; font-size: 0.9em;">
-      Fig. 4. Gene Ontology analysis of non-TF genes associated with Z-DNA structures. Enriched biological processes (BP) are displayed
+      Figure 4. Gene Ontology analysis of non-TF genes associated with Z-DNA structures. Enriched biological processes (BP) are displayed
     </div>
   </div>
 </div>
@@ -67,31 +64,36 @@ Picture
   <img src="./imgs/Gene%20ontology/Z-DNA-NonTF_genes_GO:CC.png" alt="Cellular Component" width="500"/>
 </div>
 <div style="text-align: center; font-style: italic; margin-top: 5px;">
-  Fig. 5. Gene Ontology analysis of Non-TF genes associated with Z-DNA structures: Molecular Function (left) and Cellular Component (right)
+  Figure 5. Gene Ontology analysis of Non-TF genes associated with Z-DNA structures: Molecular Function (left) and Cellular Component (right)
 </div>
-
-<div style="text-align: center; max-width: 700px; margin: 0 auto;">
-    <img src="./imgs/Tissue Enrich/All_Tissues_Enrichment_for_Z-DNA_intersecting_genes.png" alt="Z-DNA_tissue_enrich" style="width: 100%; margin-bottom: 30px; border: 1px solid #eee;"/>
-    <div style="font-style: italic; font-size: 0.95em; line-height: 1.4; margin-bottom: 30px;"> 
-      Fig. 6. Tissue enrichment analysis of genes overlapping Z-DNA regions. Barplot shows -log10(p-value) of enrichment across 29 human tissues from GTeX dataset
-    </div>
+<div style="display: flex; flex-direction: column; align-items: center; gap: 30px; margin: 20px 0;">
+  <!-- Первое изображение -->
+  <div style="text-align: center; max-width: 700px;">
+    <img src="imgs/Tissue Enrich/All_Tissues_Enrichment_for_Z-DNA_intersecting_genes.png" 
+         alt="Tissue enrichment" 
+         style="width: 100%; border: 1px solid #ddd;"/>
+    <p style="font-style: italic; margin-top: 8px; font-size: 0.9em;">
+      Figure 6. Tissue enrichment analysis of genes overlapping Z-DNA regions. Barplot shows -log10(p-value) of enrichment across 29 human tissues from GTeX dataset
+    </p>
   </div>
-  <div style="text-align: center; max-width: 700px; margin: 0 auto;">
-    <img src="./imgs/Tissue Enrich/Tissue_enriched_genes_for_Z-DNA.png" alt="Z-DNA_tissue_specific" style="width: 100%; margin-bottom: 30px; border: 1px solid #eee;"/>
-    <div style="font-style: italic; font-size: 0.95em; line-height: 1.4; margin-bottom: 30px;"> 
-      Fig. 7. Tissue-specific genes associated with Z-DNA. Heatmap displays expression enrichment of Z-DNA-linked genes in selected tissues
-    </div>
+
+  <!-- Второе изображение -->
+  <div style="text-align: center; max-width: 700px;">
+    <img src="imgs/Tissue Enrich/Tissue_enriched_genes_for_Z-DNA.png" 
+         alt="Tissue enriched genes" 
+         style="width: 100%; border: 1px solid #ddd;"/>
+    <p style="font-style: italic; margin-top: 8px; font-size: 0.9em; margin-bottom: 40px;">
+      Figure 7. Tissue-specific genes associated with Z-DNA. Heatmap displays expression enrichment of Z-DNA-linked genes in selected tissues
+    </p>
   </div>
 </div>
-
-
-
+   
 
 3. UMAP clustering revealed that Z-DNA regions exhibit distinct patterns when characterized by omics features in neuronal tissue. This clustering highlighted key signals, including transcription factors, histone marks, RNA Polymerase II and III binding sites, and DNase I hypersensitivity sites. Z-DNA regions overlapping with PRC2 anchors exhibited a similar clustering pattern to other regions.
 
 ![top_features](./imgs/Umap/top_features_umap.png)
 
-Fig.8 UMAP clusters of human Z-DNA with one top marker feature highlighted for each cluster
+Figure 8 UMAP clusters of human Z-DNA with one top marker feature highlighted for each cluster
 
 **Conclusion**
 
