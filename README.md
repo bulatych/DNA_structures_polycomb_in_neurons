@@ -1,41 +1,41 @@
-**The role of secondary DNA structures in neuron-specific regulation by Polycomb repressive complexes (PRC)**
+  # 🧬 The role of secondary DNA structures in neuron-specific regulation by Polycomb repressive complexes (PRC)
 > **Rakhimov Bulat** HSE University  
 > tg: @bulatych_7  
 > brrakhimov@hse.edu.ru  
 
-This repository contains the results of the semester project at the Bioinformatics Institute
+This repository  describes the results of my Diploma project at the Bioinformatics Institute (2024-2025)
 
 **Supervisor**: Maria Poptsova, Ekaterina Khrameeva
 
-**Objective**
+### Objective
 
 The 3D genome organization in human neurons differs significantly from other cell types. A hallmark feature is the presence of long-range interactions called “neuronal dots,” visible on Hi-C maps and overlapping with H3K27me3 ChIP-seq peaks linked to Polycomb-mediated repression [Pletenev 2024](https://academic.oup.com/nar/article/52/11/6234/7655789?login=false). It has been experimentally demonstrated that PRC2 complex components associate with G-quadruplex structures, and that there is specific binding of the CTCF protein to G-quadruplexes [Hemphill et al.](https://pmc.ncbi.nlm.nih.gov/articles/PMC10266057/) 
 This study explores the localization of Z-DNA and G-quadruplexes at PRC2 anchor regions in neurons.
 
-**Goals**
+### Goals
 
 1. Investigate the localization of G-quadruplexes(G4s) and Z-DNA at PRC2 anchor regions in human neurons. Examine the enrichment of these secondary DNA structures in promoter regions  of both transcription factor (TF) and non-transcription factor (non-TF) genes of polycomb anchor regions.
 
-2. Perform gene ontology analysis to link the identified regions to relevant biological processes. Examine tissue-specifity for genes intersected with Z-DNA and G4s.
+2. Perform gene ontology analysis to link the identified regions to relevant biological processes. Examine tissue-specificity for genes intersected with Z-DNA and G4s.
 
-3. Utilize UMAP clustering to explore how experimental and predicted Z-DNA regions group and are characterized by various omics features in neuronal tissue. Higlight the clustering patterns of Z-DNA regions that overlap with PRC2 anchors. Implement feature importance analysis of these omics vectors.
+3. Utilize UMAP clustering to explore how experimental and predicted Z-DNA regions are grouped and characterized by various omics features in neural tissue. Highlight the clustering patterns of Z-DNA regions that overlap with PRC2 anchors. Implement feature importance analysis of these omics vectors.
 
 
-**Results**
+### Results
 
 1. Significant enrichment of Z-DNA and G-quadruplexes was observed at PRC2 anchor regions in neurons, particularly within the promoter regions of both TF and non-TF genes.
 <div style="display: flex; flex-direction: column; align-items: center; gap: 30px; margin-bottom: 25px;">
   <div style="text-align: center; max-width: 450px; margin: 0 auto;">
     <img src="./imgs/Permutation%20test/Z-DNA:All_TF_genes_vs_TF_genes_in_polycomb.png" alt="TF_Z-DNA" style="width: 100%; margin-bottom: 10px;"/>
     <div style="font-style: italic; font-size: 0.9em;">
-      Figure 1. Permutation test for Z-DNA: comparison of the overlaps distribution of Z-DNA with all transcription factor (TF) genes and with TF genes in polycomb-associated regions.
+      Figure 1. Permutation test for Z-DNA: comparison of the overlaps distribution of Z-DNA with all thuman ranscription factor (TF) genes versus TF genes in polycomb-associated regions.
     </div>
   </div>
   
   <div style="text-align: center; max-width: 450px; margin: 0 auto;">
     <img src="./imgs/Permutation%20test/G4:All_TF_genes_vs_TF_genes_in_polycomb.png" alt="TF_G4" style="width: 100%; margin-bottom: 10px;"/>
     <div style="font-style: italic; font-size: 0.9em;">
-      Figure 2. Permutation test for G-quadruplexes: comparison of the overlaps distribution of G-4 with all TF genes and with TF genes in polycomb-associated regions.
+      Figure 2. Permutation test for G-quadruplexes: comparison of the overlaps distribution of G4 with all human TF genes versus overlaps with TF genes in polycomb-associated regions.
     </div>
   </div>
 </div>
@@ -53,7 +53,7 @@ This study explores the localization of Z-DNA and G-quadruplexes at PRC2 anchor 
   <div style="text-align: center; max-width: 600px; margin: 0 auto;">
     <img src="./imgs/Gene%20ontology/Z-DNA-NonTF_genes_GO:BP.png" alt="GO_Z-DNA_NonTF" style="width: 100%; margin-bottom: 10px;"/>
     <div style="font-style: italic; font-size: 0.9em;">
-      Figure 4. Gene Ontology analysis of non-TF genes associated with Z-DNA structures. Enriched biological processes (BP) are displayed
+      Figure 4. Gene Ontology analysis of non-TF genes associated with Z-DNA structures (biological processes (BP))
     </div>
   </div>
 </div>
@@ -93,15 +93,15 @@ This study explores the localization of Z-DNA and G-quadruplexes at PRC2 anchor 
 
 Figure 8. UMAP clusters of human Z-DNA with one top marker feature highlighted for each cluster
 
-**Conclusion**
+ ### Conclusion
 
  Our findings suggest that secondary DNA structures such as Z-DNA and G-quadruplexes are enriched at PRC2 anchor regions in human neurons and may play a role in Polycomb-mediated gene regulation. Their association with key regulatory features and neuronal gene expression points to a potential involvement in shaping the unique chromatin landscape of neuronal cells.
 
-**Contents**
+### Contents
 
 All results are available in the `imgs` directory. Scripts and notebooks for overlap analysis, permutation testing, and GO enrichment are located in the `scripts` and `notebooks` directories, respectively. The defined DNA regions overlapping with polycomb anchors can be found in the `intersections` folder. The UMAP clustering is shown in `UMAP.ipynb`.
 
-**Raw data**
+### Raw data
 
 - `HG38_ZDNA_ZDNABERT_predictions_thr_0.25_minlen_6.bed` - predicted regions of Z-DNA with ZDNABERT
 
@@ -121,7 +121,7 @@ The **omics data** is too large to keep in GitHub.
 
 It can be downloaded from [Chip-atlas](https://chip-atlas.org/) using the custom Python notebook `Example.ipynb`, created by the [HSE Bioinformatics Lab](https://github.com/hse-bioinflab/OmicsDC).
 
-**References** 
+### References 
 - [Pletenev IA et al.(2024). Extensive long-range polycomb interactions and weak compartmentalization are hallmarks of human neuronal 3D genome. _Nucleic acids research_, 52(11), 6234–6252.](https://academic.oup.com/nar/article/52/11/6234/7655789?login=false)
 - [Hemphill WO et al.(2023). PRC2 direct transfer from G-quadruplex RNA to dsDNA has implications for RNA-binding chromatin modifiers. _Proceedings of the National Academy of Sciences of the United States of America_, 120(23), e2220528120.](https://pmc.ncbi.nlm.nih.gov/articles/PMC10266057/)
 - [Beknazarov N, Jin S & Poptsova M (2020). Deep learning approach for predicting functional Z-DNA regions using omics data. _Scientific reports_, 10(1), 19134.](https://pubmed.ncbi.nlm.nih.gov/33154517/)
