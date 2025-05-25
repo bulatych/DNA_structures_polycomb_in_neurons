@@ -16,9 +16,9 @@ This study explores the localization of Z-DNA and G-quadruplexes at PRC2 anchor 
 
 1. Investigate the localization of G-quadruplexes(G4s) and Z-DNA at PRC2 anchor regions in human neurons. Examine the enrichment of these secondary DNA structures in promoter regions  of both transcription factor (TF) and non-transcription factor (non-TF) genes of polycomb anchor regions.
 
-2. Perform gene ontology analysis to link the identified regions to relevant biological processes. Examine tissue-specifity for genes with Z-DNA and G4s.
+2. Perform gene ontology analysis to link the identified regions to relevant biological processes. Examine tissue-specifity for genes intersected with Z-DNA and G4s.
 
-3. Utilize UMAP clustering to explore how experimental and predicted Z-DNA regions group and are characterized by various omics features in neuronal tissue. Higlight the clustering patterns of Z-DNA regions that overlap with PRC2 anchors.
+3. Utilize UMAP clustering to explore how experimental and predicted Z-DNA regions group and are characterized by various omics features in neuronal tissue. Higlight the clustering patterns of Z-DNA regions that overlap with PRC2 anchors. Implement feature importance analysis of these omics vectors.
 
 
 **Results**
@@ -28,14 +28,14 @@ This study explores the localization of Z-DNA and G-quadruplexes at PRC2 anchor 
   <div style="text-align: center; max-width: 450px; margin: 0 auto;">
     <img src="./imgs/Permutation%20test/Z-DNA:All_TF_genes_vs_TF_genes_in_polycomb.png" alt="TF_Z-DNA" style="width: 100%; margin-bottom: 10px;"/>
     <div style="font-style: italic; font-size: 0.9em;">
-      Figure 1. Permutation test for Z-DNA: comparison of the distributions of all transcription factor (TF) genes and TF genes in polycomb-associated regions.
+      Figure 1. Permutation test for Z-DNA: comparison of the overlaps distribution of Z-DNA with all transcription factor (TF) genes and with TF genes in polycomb-associated regions.
     </div>
   </div>
   
   <div style="text-align: center; max-width: 450px; margin: 0 auto;">
     <img src="./imgs/Permutation%20test/G4:All_TF_genes_vs_TF_genes_in_polycomb.png" alt="TF_G4" style="width: 100%; margin-bottom: 10px;"/>
     <div style="font-style: italic; font-size: 0.9em;">
-      Figure 2. Permutation test for G-quadruplexes: comparison of the distributions of all TF genes and TF genes in polycomb-associated regions.
+      Figure 2. Permutation test for G-quadruplexes: comparison of the overlaps distribution of G-4 with all TF genes and with TF genes in polycomb-associated regions.
     </div>
   </div>
 </div>
@@ -50,7 +50,6 @@ This study explores the localization of Z-DNA and G-quadruplexes at PRC2 anchor 
       Figure 3. Gene Ontology analysis of transcription factor (TF) genes associated with G-quadruplexes (G4)
     </div>
   </div>
-  
   <div style="text-align: center; max-width: 600px; margin: 0 auto;">
     <img src="./imgs/Gene%20ontology/Z-DNA-NonTF_genes_GO:BP.png" alt="GO_Z-DNA_NonTF" style="width: 100%; margin-bottom: 10px;"/>
     <div style="font-style: italic; font-size: 0.9em;">
@@ -67,7 +66,6 @@ This study explores the localization of Z-DNA and G-quadruplexes at PRC2 anchor 
   Figure 5. Gene Ontology analysis of Non-TF genes associated with Z-DNA structures: Molecular Function (left) and Cellular Component (right)
 </div>
 <div style="display: flex; flex-direction: column; align-items: center; gap: 30px; margin: 20px 0;">
-  <!-- Первое изображение -->
   <div style="text-align: center; max-width: 700px;">
     <img src="imgs/Tissue Enrich/All_Tissues_Enrichment_for_Z-DNA_intersecting_genes.png" 
          alt="Tissue enrichment" 
@@ -77,7 +75,7 @@ This study explores the localization of Z-DNA and G-quadruplexes at PRC2 anchor 
     </p>
   </div>
 
-  <!-- Второе изображение -->
+
   <div style="text-align: center; max-width: 700px;">
     <img src="imgs/Tissue Enrich/Tissue_enriched_genes_for_Z-DNA.png" 
          alt="Tissue enriched genes" 
@@ -89,17 +87,15 @@ This study explores the localization of Z-DNA and G-quadruplexes at PRC2 anchor 
 </div>
    
 
-3. UMAP clustering revealed that Z-DNA regions exhibit distinct patterns when characterized by omics features in neuronal tissue. This clustering highlighted key signals, including transcription factors, histone marks, RNA Polymerase II and III binding sites, and DNase I hypersensitivity sites. Z-DNA regions overlapping with PRC2 anchors exhibited a similar clustering pattern to other regions.
+3. UMAP clustering revealed that Z-DNA regions exhibit distinct patterns when characterized by omics features in neuronal tissue. The analysis identified several key clusters associated with transcriptional regulation, chromatin organization, and Polycomb-mediated repression and  highlighted key signals, including transcription factors, histone marks, RNA Polymerase II and III binding sites for neurons. Z-DNA regions overlapping with PRC2 anchors exhibited a similar clustering pattern to other regions (Fig. 8).  Notably, most of the Z-DNA regions (48%) overlapping with PRC2 anchors are clustered with omics features associated with Polycomb-mediated repression.
 
 ![top_features](./imgs/Umap/top_features_umap.png)
 
-Figure 8 UMAP clusters of human Z-DNA with one top marker feature highlighted for each cluster
+Figure 8. UMAP clusters of human Z-DNA with one top marker feature highlighted for each cluster
 
 **Conclusion**
 
  Our findings suggest that secondary DNA structures such as Z-DNA and G-quadruplexes are enriched at PRC2 anchor regions in human neurons and may play a role in Polycomb-mediated gene regulation. Their association with key regulatory features and neuronal gene expression points to a potential involvement in shaping the unique chromatin landscape of neuronal cells.
-
-
 
 **Contents**
 
