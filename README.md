@@ -25,7 +25,7 @@ This study explores the localization of Z-DNA and G-quadruplexes at polycomb rep
 ### Workflow
 
 Workflow is shown in the figure below
-
+![pipeline](./imgs/pipeline.png)
 
 ### Results
 
