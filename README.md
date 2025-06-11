@@ -127,6 +127,27 @@ The **omics data** is too large to keep in GitHub.
 
 It can be downloaded from [Chip-atlas](https://chip-atlas.org/) using the custom Python notebook `Example.ipynb`, created by the [HSE Bioinformatics Lab](https://github.com/hse-bioinflab/OmicsDC).
 
+**Main packages**:
+
+All required R and python packages can be installed via `environmet.yaml` file
+- `GenomicFeatures=1.60.0`, `rtracklayer=1.68.0`, `GenomicRanges=1.60.0` - Regions overlapping implementation
+- `regioneR=1.40.1` - Permutation test implementation.
+  
+  `run_permtest.R` - custom Rscript to run permutation test with following command:
+  
+  ```bash
+  ./run_permtest.R <background.csv> <foreground.csv> <GQ.bed> <annotation.gtf.gz>
+  ```
+  `background.csv` - background regions
+  
+  `foreground.csv` - foreground regions
+  
+  `GQ.bed` - DNA structures regions
+  
+  `annotation.gtf.gz`- annotation file to get promoters regions
+  
+- `clusterProfiler=4.16.0` - GO analysis implementation
+
 ### References 
 - [Pletenev IA et al.(2024). Extensive long-range polycomb interactions and weak compartmentalization are hallmarks of human neuronal 3D genome. _Nucleic acids research_, 52(11), 6234–6252.](https://academic.oup.com/nar/article/52/11/6234/7655789?login=false)
 - [Hemphill WO et al.(2023). PRC2 direct transfer from G-quadruplex RNA to dsDNA has implications for RNA-binding chromatin modifiers. _Proceedings of the National Academy of Sciences of the United States of America_, 120(23), e2220528120.](https://pmc.ncbi.nlm.nih.gov/articles/PMC10266057/)
