@@ -7,18 +7,24 @@ This repository  describes the results of my Diploma project at the Bioinformati
 
 **Supervisor**: Maria Poptsova, Ekaterina Khrameeva
 
-### Objective
+### Aim and objectives of project
 
 The 3D genome organization in human neurons differs significantly from other cell types. A hallmark feature is the presence of long-range interactions called “neuronal dots,” visible on Hi-C maps and overlapping with H3K27me3 ChIP-seq peaks linked to Polycomb-mediated repression [Pletenev 2024](https://academic.oup.com/nar/article/52/11/6234/7655789?login=false). It has been experimentally demonstrated that PRC2 complex components associate with G-quadruplex structures, and that there is specific binding of the CTCF protein to G-quadruplexes [Hemphill et al.](https://pmc.ncbi.nlm.nih.gov/articles/PMC10266057/) 
-This study explores the localization of Z-DNA and G-quadruplexes at PRC2 anchor regions in neurons.
+This study explores the localization of Z-DNA and G-quadruplexes at polycomb repressive complex (PRC2) anchor regions in neurons.
 
-### Goals
+**Main goal**: A comprehensive analysis of PRC2 anchor regions in neurons and their association with DNA secondary structures.
 
-1. Investigate the localization of G-quadruplexes(G4s) and Z-DNA at PRC2 anchor regions in human neurons. Examine the enrichment of these secondary DNA structures in promoter regions  of both transcription factor (TF) and non-transcription factor (non-TF) genes of polycomb anchor regions.
+### Objectives
 
-2. Perform gene ontology analysis to link the identified regions to relevant biological processes. Examine tissue-specificity for genes intersected with Z-DNA and G4s.
+1. Investigate the localization of G-quadruplexes(GQ) and Z-DNA at PRC2 anchor regions in human neurons. Examine the enrichment of these secondary DNA structures in promoter regions  of both transcription factor (TF) and non-transcription factor (non-TF) genes of polycomb anchor regions.
+
+2. Perform gene ontology analysis to link the identified regions to relevant biological processes. Examine tissue-specificity for genes intersected with Z-DNA and GQs.
 
 3. Utilize UMAP clustering to explore how experimental and predicted Z-DNA regions are grouped and characterized by various omics features in neural tissue. Highlight the clustering patterns of Z-DNA regions that overlap with PRC2 anchors. Implement feature importance analysis of these omics vectors.
+
+### Workflow
+
+Workflow is shown in the figure below
 
 
 ### Results
@@ -35,7 +41,7 @@ This study explores the localization of Z-DNA and G-quadruplexes at PRC2 anchor 
   <div style="text-align: center; max-width: 450px; margin: 0 auto;">
     <img src="./imgs/Permutation%20test/G4:All_TF_genes_vs_TF_genes_in_polycomb.png" alt="TF_G4" style="width: 100%; margin-bottom: 10px;"/>
     <div style="font-style: italic; font-size: 0.9em;">
-      Figure 2. Permutation test for G-quadruplexes: comparison of the overlaps distribution of G4 with all human TF genes versus overlaps with TF genes in polycomb-associated regions.
+      Figure 2. Permutation test for G-quadruplexes: comparison of the overlaps distribution of GQ with all human TF genes versus overlaps with TF genes in polycomb-associated regions.
     </div>
   </div>
 </div>
@@ -47,7 +53,7 @@ This study explores the localization of Z-DNA and G-quadruplexes at PRC2 anchor 
   <div style="text-align: center; max-width: 600px; margin: 0 auto;">
     <img src="./imgs/Gene%20ontology/GO_combined_G4_TF_genes.png" alt="GO_G4_TF" style="width: 100%; margin-bottom: 10px;"/>
     <div style="font-style: italic; font-size: 0.9em;">
-      Figure 3. Gene Ontology analysis of transcription factor (TF) genes associated with G-quadruplexes (G4)
+      Figure 3. Gene Ontology analysis of transcription factor (TF) genes associated with G-quadruplexes (GQ)
     </div>
   </div>
   <div style="text-align: center; max-width: 600px; margin: 0 auto;">
